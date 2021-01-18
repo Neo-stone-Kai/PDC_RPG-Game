@@ -47,19 +47,20 @@ public class MainFrame extends JFrame implements PanelConfig{
         public void paint(Graphics g){
             super.paint(g); 
             
+            //Map refresh
             int yi = Player.y - 6 > 0? Player.y - 6 : 0;
-            int xj = Player.x - 7 > 0? Player.x - 7 : 0;
+            int xj = Player.x - 6 > 0? Player.x - 6 : 0;
             int ym = Player.y - 6 < 0? Math.abs(Player.y - 6) : 0;
-            int xm = Player.x - 7 < 0? Math.abs(Player.x - 7) : 0;
+            int xm = Player.x - 6 < 0? Math.abs(Player.x - 6) : 0;
             
-            for (int i = yi; (i < Player.y + 6) && (i < 23); i++){
-                for (int j = xj; (j < Player.x + 7) && (j < 13); j++){
+            for (int i = yi; (i <= Player.y + 6) && (i < 23); i++){
+                for (int j = xj; (j <= Player.x + 6) && (j < 13); j++){
                     ImageIcon icon = GetIcon.geticon(Map_Reader.map[i][j]);
                     g.drawImage(icon.getImage(), 50 * (j - xj + xm), 50 * (i - yi + ym), elesize, elesize, null);
                 }
             }
             
-            
+            //Player Model
             if(!up && !down && !left && !right){
                 switch (towards){
                     case 1:

@@ -9,7 +9,7 @@ public class Player extends Thread implements PanelConfig{
     
     private int speed = 1;
     
-    static int x = 7;
+    static int x = 6;
     static int y = 10;
     
     static boolean up = false;
@@ -41,28 +41,28 @@ public class Player extends Thread implements PanelConfig{
             u++;
             if (u >= 12) u = 0;
             towards = 1;
-            y = y - speed > 1 ? (y - speed) : y;
+            y = y - speed > 0 ? (y - speed) : y;
             System.out.println(x + " " + y);
         }
         if (down){
             d++;
             if (d >= 12) d = 0;
             towards = 2;
-            y = y + speed < 23 ? (y + speed) : y;
+            y = y + speed < 22 ? (y + speed) : y;
             System.out.println(x + " " + y);
         }
         if (left){
             l++;
             if (l >= 12) l = 0;
             towards = 3;
-            x = x - speed > 1 ? (x - speed) : x;
+            x = x - speed > 0 ? (x - speed) : x;
             System.out.println(x + " " + y);
         }
         if (right){
             r++;
             if (r >= 12) r = 0;
             towards = 4;
-            x = x + speed < 13 ? (x + speed) : x;
+            x = x + speed < 12 ? (x + speed) : x;
             System.out.println(x + " " + y);
         }
     }
