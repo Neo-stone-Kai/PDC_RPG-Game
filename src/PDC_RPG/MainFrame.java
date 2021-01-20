@@ -1,6 +1,5 @@
 package PDC_RPG;
 
-import static PDC_RPG.Player.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -8,8 +7,17 @@ import java.io.*;
 
 public class MainFrame extends JFrame implements PanelConfig{
     JPanel panel;
+    static int[][] NPCS = new int[Map_Reader.height][Map_Reader.width];
+    static NPC boss;
     
     public MainFrame(){
+        for (int i = 0; i < Map_Reader.height; i++){
+            for (int j = 0; j < Map_Reader.width; j++){
+                MainFrame.NPCS[i][j] = 0;
+            }
+        }
+        boss = new BOSS();
+        
         init();
     }
     
@@ -43,11 +51,19 @@ public class MainFrame extends JFrame implements PanelConfig{
 
     
     class MyPanel extends JPanel{
+        boolean ifn = false;
+        
         @Override
         public void paint(Graphics g){
-            super.paint(g); 
+            super.paint(g);
+            MapRefresh(g);
+            Player.PlayerRefresh(g);
+            if (boss.isTrigger()) boss.drawtalk(g);
             
-            //Map refresh
+            repaint();
+        }
+            
+        public void MapRefresh(Graphics g){
             int yi = Player.y - 5 > 0? Player.y - 5 : 0;
             int xj = Player.x - 6 > 0? Player.x - 6 : 0;
             int ym = Player.y - 5 < 0? Math.abs(Player.y - 5) : 0;
@@ -57,94 +73,42 @@ public class MainFrame extends JFrame implements PanelConfig{
                 for (int j = xj; (j <= Player.x + 6) && (j < 13); j++){
                     ImageIcon icon = GetIcon.geticon(Map_Reader.map[i][j]);
                     g.drawImage(icon.getImage(), 50 * (j - xj + xm), 50 * (i - yi + ym), elesize, elesize, null);
-                }
-            }
-            
-            //Player Model
-            if(!up && !down && !left && !right){
-                switch (towards){
-                    case 1:
-                        g.drawImage(up1.getImage(), px - 25, py - 50, 50, 75, null);
-                        break;
-                    case 2:
-                        g.drawImage(down1.getImage(), px - 25, py - 50, 50, 75, null);
-                        break;
-                    case 3:
-                        g.drawImage(left1.getImage(), px - 25, py - 50, 50, 75, null);
-                        break;
-                    case 4:
-                        g.drawImage(right1.getImage(), px - 25, py - 50, 50, 75, null);
-                        break;
-                }
-            }else{
-                if (up){
-                    if (u < 3){
-                        g.drawImage(up1.getImage(), px - 25, py - 50, 50, 75, null);
-                    }else if (u < 6){
-                        g.drawImage(up2.getImage(), px - 25, py - 50, 50, 75, null);
-                    }else if (u < 9){
-                        g.drawImage(up3.getImage(), px - 25, py - 50, 50, 75, null);
-                    }else if (u < 12){
-                        g.drawImage(up4.getImage(), px - 25, py - 50, 50, 75, null);
-                    }
-                }
-                if (down){
-                    if (d < 3){
-                        g.drawImage(down1.getImage(), px - 25, py - 50, 50, 75, null);
-                    }else if (d < 6){
-                        g.drawImage(down2.getImage(), px - 25, py - 50, 50, 75, null);
-                    }else if (d < 9){
-                        g.drawImage(down3.getImage(), px - 25, py - 50, 50, 75, null);
-                    }else if (d < 12){
-                        g.drawImage(down4.getImage(), px - 25, py - 50, 50, 75, null);
-                    }
-                }
-                if (left){
-                    if (l < 3){
-                        g.drawImage(left1.getImage(), px - 25, py - 50, 50, 75, null);
-                    }else if (l < 6){
-                        g.drawImage(left2.getImage(), px - 25, py - 50, 50, 75, null);
-                    }else if (l < 9){
-                        g.drawImage(left3.getImage(), px - 25, py - 50, 50, 75, null);
-                    }else if (l < 12){
-                        g.drawImage(left4.getImage(), px - 25, py - 50, 50, 75, null);
-                    }
-                }
-                if (right){
-                    if (r < 3){
-                        g.drawImage(right1.getImage(), px - 25, py - 50, 50, 75, null);
-                    }else if (r < 6){
-                        g.drawImage(right2.getImage(), px - 25, py - 50, 50, 75, null);
-                    }else if (r < 9){
-                        g.drawImage(right3.getImage(), px - 25, py - 50, 50, 75, null);
-                    }else if (r < 12){
-                        g.drawImage(right4.getImage(), px - 25, py - 50, 50, 75, null);
+                    NPC dnpc = ifNpc(j, i, boss);
+                    if (dnpc != null){
+                        g.drawImage(dnpc.getIcon().getImage(), 50 * (j - xj + xm), 50 * (i - yi + ym) - 25, 50, 75, null);
                     }
                 }
             }
-                       
-            
-            repaint();
         }
-            
+        
+        public NPC ifNpc(int x, int y, NPC npc){
+            if (x == npc.getx() && y == npc.gety()){
+                ifn = true;
+                return npc;
+            }else return null;
+        }
         
     }
     
     private static class PanelListenner extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e) {
+            boolean x = boss.isTrigger();
             switch (e.getKeyCode()){
                 case KeyEvent.VK_UP:
-                    Player.up = true;
+                    if (!x) Player.up = true;
                     break;
                 case KeyEvent.VK_DOWN:
-                    Player.down = true;
+                    if (!x) Player.down = true;
                     break;
                 case KeyEvent.VK_LEFT:
-                    Player.left = true;
+                    if (!x) Player.left = true;
                     break;
                 case KeyEvent.VK_RIGHT:
-                    Player.right = true;
+                    if (!x) Player.right = true;
+                    break;
+                case KeyEvent.VK_Z:
+                    DetectTalk(boss);
                     break;
                 default:
                     break;
@@ -171,7 +135,37 @@ public class MainFrame extends JFrame implements PanelConfig{
                     break;
             }
         }
-        
-        
+
+        private void DetectTalk(NPC npc) {
+            if (Player.x == npc.getx() && Player.y - 1== npc.gety() && Player.towards == 1) {
+                if (npc.isTrigger()){
+                    npc.nextstep();
+                }else{
+                    npc.setTrigger(true);
+                }
+                
+            }
+            if (Player.x == npc.getx() && Player.y + 1 == npc.gety() && Player.towards == 2) {
+                if (npc.isTrigger()){
+                    npc.nextstep();
+                }else{
+                    npc.setTrigger(true);
+                }
+            }
+            if (Player.x - 1 == npc.getx() && Player.y == npc.gety() && Player.towards == 3) {
+                if (npc.isTrigger()){
+                    npc.nextstep();
+                }else{
+                    npc.setTrigger(true);
+                }
+            }
+            if (Player.x + 1 == npc.getx() && Player.y == npc.gety() && Player.towards == 4) {
+                if (npc.isTrigger()){
+                    npc.nextstep();
+                }else{
+                    npc.setTrigger(true);
+                }
+            }
+        }
     }
 }

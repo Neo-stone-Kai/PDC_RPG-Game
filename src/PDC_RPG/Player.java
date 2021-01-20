@@ -40,32 +40,96 @@ public class Player extends Thread implements PanelConfig{
         if (up){
             u++;
             if (u >= 12) u = 0;
-            towards = 1;
-            y = y - speed > 0 ? (y - speed) : y;
+            towards = 1;            
+            if (MainFrame.NPCS[y - speed][x] != 1) y = y - speed > 0 ? (y - speed) : y;
             System.out.println(x + " " + y);
         }
         if (down){
             d++;
             if (d >= 12) d = 0;
             towards = 2;
-            y = y + speed < 22 ? (y + speed) : y;
+            if (MainFrame.NPCS[y + speed][x] != 1)y = y + speed < 22 ? (y + speed) : y;
             System.out.println(x + " " + y);
         }
         if (left){
             l++;
             if (l >= 12) l = 0;
             towards = 3;
-            x = x - speed > 0 ? (x - speed) : x;
+            if (MainFrame.NPCS[y][x - speed] != 1) x = x - speed > 0 ? (x - speed) : x;
             System.out.println(x + " " + y);
         }
         if (right){
             r++;
             if (r >= 12) r = 0;
             towards = 4;
-            x = x + speed < 12 ? (x + speed) : x;
+            if (MainFrame.NPCS[y][x + speed] != 1) x = x + speed < 12 ? (x + speed) : x;
             System.out.println(x + " " + y);
         }
     }
+    
+    public static void PlayerRefresh(Graphics g){
+            if(!up && !down && !left && !right){
+                switch (towards){
+                    case 1:
+                        g.drawImage(up1.getImage(), px - 25, py - 50, 50, 75, null);
+                        break;
+                    case 2:
+                        g.drawImage(down1.getImage(), px - 25, py - 50, 50, 75, null);
+                        break;
+                    case 3:
+                        g.drawImage(left1.getImage(), px - 25, py - 50, 50, 75, null);
+                        break;
+                    case 4:
+                        g.drawImage(right1.getImage(), px - 25, py - 50, 50, 75, null);
+                        break;
+                }
+            }else{
+                if (up){
+                    if (u < 3){
+                        g.drawImage(up1.getImage(), px - 25, py - 50, 50, 75, null);
+                    }else if (u < 6){
+                        g.drawImage(up2.getImage(), px - 25, py - 50, 50, 75, null);
+                    }else if (u < 9){
+                        g.drawImage(up3.getImage(), px - 25, py - 50, 50, 75, null);
+                    }else if (u < 12){
+                        g.drawImage(up4.getImage(), px - 25, py - 50, 50, 75, null);
+                    }
+                }
+                if (down){
+                    if (d < 3){
+                        g.drawImage(down1.getImage(), px - 25, py - 50, 50, 75, null);
+                    }else if (d < 6){
+                        g.drawImage(down2.getImage(), px - 25, py - 50, 50, 75, null);
+                    }else if (d < 9){
+                        g.drawImage(down3.getImage(), px - 25, py - 50, 50, 75, null);
+                    }else if (d < 12){
+                        g.drawImage(down4.getImage(), px - 25, py - 50, 50, 75, null);
+                    }
+                }
+                if (left){
+                    if (l < 3){
+                        g.drawImage(left1.getImage(), px - 25, py - 50, 50, 75, null);
+                    }else if (l < 6){
+                        g.drawImage(left2.getImage(), px - 25, py - 50, 50, 75, null);
+                    }else if (l < 9){
+                        g.drawImage(left3.getImage(), px - 25, py - 50, 50, 75, null);
+                    }else if (l < 12){
+                        g.drawImage(left4.getImage(), px - 25, py - 50, 50, 75, null);
+                    }
+                }
+                if (right){
+                    if (r < 3){
+                        g.drawImage(right1.getImage(), px - 25, py - 50, 50, 75, null);
+                    }else if (r < 6){
+                        g.drawImage(right2.getImage(), px - 25, py - 50, 50, 75, null);
+                    }else if (r < 9){
+                        g.drawImage(right3.getImage(), px - 25, py - 50, 50, 75, null);
+                    }else if (r < 12){
+                        g.drawImage(right4.getImage(), px - 25, py - 50, 50, 75, null);
+                    }
+                }
+            }
+        }
     
     
     static ImageIcon up1 = new ImageIcon("npc\\001.gif");

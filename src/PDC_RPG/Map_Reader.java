@@ -4,6 +4,8 @@ import java.io.*;
 
 public class Map_Reader {
     static int[][] map;
+    static int height;
+    static int width;
     
     static void readmap(String path){
         
@@ -11,8 +13,8 @@ public class Map_Reader {
             FileInputStream fis = new FileInputStream(path);
             DataInputStream dis = new DataInputStream(fis);
             
-            int height = dis.readInt();
-            int width = dis.readInt();
+            height = dis.readInt();
+            width = dis.readInt();
             System.out.println(height + " " +width);
             
             map = new int[height][width];
