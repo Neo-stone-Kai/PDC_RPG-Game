@@ -137,14 +137,15 @@ public class BOSS extends NPC{
             if (Player.HP <= 0 && this.getHP() <= 0){
                     System.out.println("end3");
                     this.setFight(false);
-            }
-            if (Player.HP <= 0){
-                    System.out.println("end2");
-                    this.setFight(false);
-            }
-            if (this.getHP() <= 0){
-                    System.out.println("end1");
-                    this.setFight(false);
+            }else{
+                if (Player.HP <= 0){
+                        System.out.println("end2");
+                        this.setFight(false);
+                }
+                if (this.getHP() <= 0){
+                        System.out.println("end1");
+                        this.setFight(false);
+                }
             }
         }
     }

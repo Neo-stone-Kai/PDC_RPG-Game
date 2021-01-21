@@ -151,16 +151,10 @@ public abstract class NPC extends Thread{
         this.choose = choose;
     }
 
-    /**
-     * @return the ftstage
-     */
     public int getFtstage() {
         return ftstage;
     }
 
-    /**
-     * @param ftstage the ftstage to set
-     */
     public void setFtstage(int ftstage) {
         this.ftstage = ftstage;
     }

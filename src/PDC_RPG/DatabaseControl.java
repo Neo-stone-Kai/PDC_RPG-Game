@@ -1,9 +1,13 @@
 package PDC_RPG;
 
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DatabaseControl {
-    private final String url = "jdbc:derby://localhost:1527/RPG_DB";
+    
+    //private final String url = "jdbc:derby://localhost:1527/RPG_DB;create=true";
+    private final String url = "jdbc:derby:database\\RPG_DB; create=true";
     private final String username = "users";
     private final String password = "123456";
     
@@ -11,9 +15,14 @@ public class DatabaseControl {
     private static Statement state;
     
     private static ResultSet rs;
-
+    private static final String DRIVERCLASS = "org.apache.derby.jdbc.EmbeddedDriver";
+    
     public DatabaseControl(){
-        
+        try {
+            Class.forName(DRIVERCLASS).newInstance();
+        } catch (Exception ex) {
+            Logger.getLogger(DatabaseControl.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void Connect() {
