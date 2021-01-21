@@ -24,6 +24,9 @@ public class Player extends Thread implements PanelConfig{
     static int l = 0;
     static int r = 0;
     
+    static int HP = 40;
+    static int attack = 10;
+    
     @Override
     public void run() {
         while(true){
@@ -40,7 +43,7 @@ public class Player extends Thread implements PanelConfig{
         if (up){
             u++;
             if (u >= 12) u = 0;
-            towards = 1;            
+            towards = 1;
             if (MainFrame.NPCS[y - speed][x] != 1) y = y - speed > 0 ? (y - speed) : y;
             System.out.println(x + " " + y);
         }

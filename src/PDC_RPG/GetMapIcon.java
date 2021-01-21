@@ -2,7 +2,7 @@ package PDC_RPG;
 
 import javax.swing.*;
 
-public class GetIcon implements PanelConfig{
+public class GetMapIcon implements PanelConfig{
     static ImageIcon geticon(int num){
         switch (num){
             case 0:

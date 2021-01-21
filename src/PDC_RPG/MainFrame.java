@@ -17,7 +17,7 @@ public class MainFrame extends JFrame implements PanelConfig{
             }
         }
         boss = new BOSS();
-        
+        boss.start();
         init();
     }
     
@@ -48,7 +48,6 @@ public class MainFrame extends JFrame implements PanelConfig{
         panel.setLayout(null);  
         panel.setBackground(Color.RED);
     }
-
     
     class MyPanel extends JPanel{
         boolean ifn = false;
@@ -59,10 +58,9 @@ public class MainFrame extends JFrame implements PanelConfig{
             MapRefresh(g);
             Player.PlayerRefresh(g);
             if (boss.isTrigger()) boss.drawtalk(g);
-            
-            repaint();
+            if (boss.isFight()) boss.drawfight(g);
         }
-            
+        
         public void MapRefresh(Graphics g){
             int yi = Player.y - 5 > 0? Player.y - 5 : 0;
             int xj = Player.x - 6 > 0? Player.x - 6 : 0;
@@ -71,7 +69,7 @@ public class MainFrame extends JFrame implements PanelConfig{
             
             for (int i = yi; (i <= Player.y + 5) && (i < 23); i++){
                 for (int j = xj; (j <= Player.x + 6) && (j < 13); j++){
-                    ImageIcon icon = GetIcon.geticon(Map_Reader.map[i][j]);
+                    ImageIcon icon = GetMapIcon.geticon(Map_Reader.map[i][j]);
                     g.drawImage(icon.getImage(), 50 * (j - xj + xm), 50 * (i - yi + ym), elesize, elesize, null);
                     NPC dnpc = ifNpc(j, i, boss);
                     if (dnpc != null){
@@ -93,13 +91,22 @@ public class MainFrame extends JFrame implements PanelConfig{
     private static class PanelListenner extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e) {
-            boolean x = boss.isTrigger();
+            boolean x = boss.isTrigger() || boss.isFight();
+            boolean fx = boss.isFight();
             switch (e.getKeyCode()){
                 case KeyEvent.VK_UP:
-                    if (!x) Player.up = true;
+                    if (!x) {
+                        Player.up = true;
+                    }else if (fx){
+                        boss.setChoose(0);
+                    }
                     break;
                 case KeyEvent.VK_DOWN:
-                    if (!x) Player.down = true;
+                    if (!x) {
+                        Player.down = true;
+                    }else if (fx && boss.getFtstage() == 4){
+                        boss.setChoose(1);
+                    }
                     break;
                 case KeyEvent.VK_LEFT:
                     if (!x) Player.left = true;
@@ -108,7 +115,11 @@ public class MainFrame extends JFrame implements PanelConfig{
                     if (!x) Player.right = true;
                     break;
                 case KeyEvent.VK_Z:
-                    DetectTalk(boss);
+                    if (fx) {
+                        SelectAction();
+                    }else{
+                        DetectTalk(boss);
+                    }
                     break;
                 default:
                     break;
@@ -135,36 +146,40 @@ public class MainFrame extends JFrame implements PanelConfig{
                     break;
             }
         }
-
+        
         private void DetectTalk(NPC npc) {
             if (Player.x == npc.getx() && Player.y - 1== npc.gety() && Player.towards == 1) {
-                if (npc.isTrigger()){
-                    npc.nextstep();
-                }else{
-                    npc.setTrigger(true);
-                }
-                
+                setTrigger(npc, 2);
             }
             if (Player.x == npc.getx() && Player.y + 1 == npc.gety() && Player.towards == 2) {
-                if (npc.isTrigger()){
-                    npc.nextstep();
-                }else{
-                    npc.setTrigger(true);
-                }
+                setTrigger(npc, 1);
             }
             if (Player.x - 1 == npc.getx() && Player.y == npc.gety() && Player.towards == 3) {
-                if (npc.isTrigger()){
-                    npc.nextstep();
-                }else{
-                    npc.setTrigger(true);
-                }
+                setTrigger(npc, 4);
             }
             if (Player.x + 1 == npc.getx() && Player.y == npc.gety() && Player.towards == 4) {
-                if (npc.isTrigger()){
+                setTrigger(npc, 3);
+            }
+        }
+        
+        private void setTrigger(NPC npc, int towards){
+            if (npc.isTrigger()){
                     npc.nextstep();
                 }else{
+                    npc.setTowards(towards);
                     npc.setTrigger(true);
                 }
+        }
+        
+        private void SelectAction() {
+            switch (boss.getChoose()){
+                case 0:
+                    boss.attack();
+                    boss.beattack();
+                    break;
+                case 1:
+                    boss.beattack();
+                    break;
             }
         }
     }
