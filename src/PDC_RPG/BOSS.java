@@ -7,7 +7,6 @@ public class BOSS extends NPC{
     static ImageIcon background = new ImageIcon("background\\1.jpg");
     static ImageIcon fighticon = new ImageIcon("npc\\120.gif");
     static Fight ft;
-
     
     public BOSS(){
         this.ID = "2";
@@ -136,14 +135,17 @@ public class BOSS extends NPC{
         if (this.isFight()){
             if (Player.HP <= 0 && this.getHP() <= 0){
                     System.out.println("end3");
+                    MainFrame.end = 3;
                     this.setFight(false);
             }else{
                 if (Player.HP <= 0){
                         System.out.println("end2");
+                        MainFrame.end = 2;
                         this.setFight(false);
                 }
                 if (this.getHP() <= 0){
                         System.out.println("end1");
+                        MainFrame.end = 1;
                         this.setFight(false);
                 }
             }

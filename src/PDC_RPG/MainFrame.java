@@ -9,6 +9,7 @@ public class MainFrame extends JFrame implements PanelConfig{
     JPanel panel;
     static int[][] NPCS = new int[Map_Reader.height][Map_Reader.width];
     static NPC boss;
+    static int end;
     
     public MainFrame(){
         for (int i = 0; i < Map_Reader.height; i++){
@@ -56,9 +57,12 @@ public class MainFrame extends JFrame implements PanelConfig{
         public void paint(Graphics g){
             super.paint(g);
             MapRefresh(g);
-            Player.PlayerRefresh(g);
+            if (end != 2 && end != 3) Player.PlayerRefresh(g);
             if (boss.isTrigger()) boss.drawtalk(g);
             if (boss.isFight()) boss.drawfight(g);
+            if (end == 1) end1.enddrawer(g);
+            if (end == 2) end2.enddrawer(g);
+            if (end == 3) end3.enddrawer(g);
         }
         
         public void MapRefresh(Graphics g){
@@ -72,7 +76,7 @@ public class MainFrame extends JFrame implements PanelConfig{
                     ImageIcon icon = GetMapIcon.geticon(Map_Reader.map[i][j]);
                     g.drawImage(icon.getImage(), 50 * (j - xj + xm), 50 * (i - yi + ym), elesize, elesize, null);
                     NPC dnpc = ifNpc(j, i, boss);
-                    if (dnpc != null){
+                    if (dnpc != null && end != 1 && end != 3){
                         g.drawImage(dnpc.getIcon().getImage(), 50 * (j - xj + xm), 50 * (i - yi + ym) - 25, 50, 75, null);
                     }
                 }
@@ -118,7 +122,7 @@ public class MainFrame extends JFrame implements PanelConfig{
                     if (fx) {
                         SelectAction();
                     }else{
-                        DetectTalk(boss);
+                        if (end == 0)DetectTalk(boss);
                     }
                     break;
                 default:
