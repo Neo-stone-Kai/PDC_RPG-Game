@@ -1,4 +1,14 @@
-Fri Jan 22 02:49:58 CST 2021 : Apache Derby 网络服务器 - 10.14.2.0 - (1828579) 已启动并准备接受端口 1527 上的连接
+Fri Jan 22 17:19:24 CST 2021 : Apache Derby 网络服务器 - 10.14.2.0 - (1828579) 已启动并准备接受端口 1527 上的连接
 ----------------------------------------------------------------
-Fri Jan 22 02:50:29 CST 2021：正在关闭 Derby 引擎
-----------------------------------------------------------------
+Fri Jan 22 17:19:24 CST 2021:
+正在使用类加载程序 sun.misc.Launcher$AppClassLoader@1d44bcfa 引导数据库
+目录 D:\NetBeansProjects\PDC_RPG\database\RPG_DB 中的 Derby 版本 The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579) 实例 a816c00e-0177-2964-2134-ffffbb2b9434
+已从 file:/D:/JAVADB/db-derby-10.14.2.0-bin/lib/derby.jar 加载
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_271-b09
+user.dir=D:\JAVADB\db-derby-10.14.2.0-bin
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=D:\NetBeansProjects\PDC_RPG\database
+数据库类加载程序已启动 - derby.database.classpath=''

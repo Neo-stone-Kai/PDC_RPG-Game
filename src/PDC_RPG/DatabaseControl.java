@@ -46,6 +46,13 @@ public class DatabaseControl {
         return rs;
     }
     
+    public void Insert(String table, int ID, String name, int HP, int ATTACK){
+        try {
+            state.executeUpdate("INSERT INTO " + table + "values(" + String.valueOf(ID) + ",'" + name + "'," + String.valueOf(HP) + "," + String.valueOf(ATTACK) + ");");
+        } catch (SQLException ex) {
+        }
+    }
+    
     public void Close(){
         try {
             rs.close();

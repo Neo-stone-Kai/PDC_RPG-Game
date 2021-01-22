@@ -56,7 +56,7 @@ public class map_drawer extends JFrame implements MapConfig{
     }
     
     class MySetPanel extends JPanel{
-        
+        //draw the block to the panel
         public void paint(Graphics g) {
             super.paint(g);
             for(int i = 0; i < MapHeight/eleHeight; i++){
@@ -80,7 +80,7 @@ public class map_drawer extends JFrame implements MapConfig{
     }
     
     class PanelListenner extends MouseAdapter{
-        
+        //Click to draw
         public void mouseClicked(MouseEvent e) {
             int i = e.getY() / eleHeight;
             int j = e.getX() / eleWidth;
@@ -98,7 +98,7 @@ public class map_drawer extends JFrame implements MapConfig{
     }
     
     class Buttonlistenner implements ActionListener{
-        
+        //svae the .map file
         public void actionPerformed(ActionEvent e) {     
             if(e.getActionCommand().equals("create")){
                 try{

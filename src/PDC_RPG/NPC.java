@@ -4,6 +4,12 @@ import java.awt.Graphics;
 import java.sql.*;
 import javax.swing.*;
 
+/**
+ * 
+ * This abstract class is used for the model of NPCs
+ */
+
+
 public abstract class NPC extends Thread{
     private boolean trigger = false;
     private boolean fight = false;

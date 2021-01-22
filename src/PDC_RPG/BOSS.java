@@ -35,7 +35,7 @@ public class BOSS extends NPC{
             }
         }
     }
-    
+    //When triggered the talk
     @Override
     public void drawtalk(Graphics g){
         g.setColor(Color.RED);
@@ -57,7 +57,7 @@ public class BOSS extends NPC{
         g.setFont(font);
         g.drawString("Kill!!! I'll Kill you!", 15, 440);
     }
-    
+    //During talking, trigger again
     @Override
     public void nextstep() {
         this.setTrigger(false);       
@@ -65,6 +65,7 @@ public class BOSS extends NPC{
         this.setFight(true);
     }
     
+    //Following classes are for fight
     @Override
     public void drawfight(Graphics g){
         g.drawImage(background.getImage(), 0, 0, null);

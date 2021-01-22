@@ -17,7 +17,7 @@ public class end1 {
         g.fillRect(11, 351, 580, 150);
         first(g);
         if (stage >= 200) second(g);
-        if (stage >= 400) Thanks.thank(g);
+        if (stage >= 500) Thanks.thank(g);
     }
     
     public static void endset(){
@@ -41,11 +41,7 @@ public class end1 {
     
     public static void second(Graphics g){
         g.setColor(Color.WHITE);
-        Font font = new Font("Arial", Font.BOLD, 30);
-        g.setFont(font);
-        g.drawString("Princess", 15, 355);
-        g.setColor(Color.WHITE);
-        font = new Font("Courier", Font.PLAIN, 20);
+        Font font = new Font("Courier", Font.PLAIN, 20);
         g.setFont(font);
         g.drawString("NICE JOB!", 15, 415);
         g.setColor(Color.RED);

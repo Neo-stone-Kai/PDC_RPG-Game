@@ -16,9 +16,9 @@ public class Player extends Thread implements PanelConfig{
     static boolean down = false;
     static boolean left = false;
     static boolean right = false;
-    
+    //towards: 1 for up, 2 for down, 3 for left, 4 for right
     static int towards = 1;
-    
+    //control the action picture
     static int u = 0;
     static int d = 0;
     static int l = 0;

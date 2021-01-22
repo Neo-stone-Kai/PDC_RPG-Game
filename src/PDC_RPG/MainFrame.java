@@ -3,7 +3,6 @@ package PDC_RPG;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.io.*;
 
 public class MainFrame extends JFrame implements PanelConfig{
     JPanel panel;
@@ -50,6 +49,7 @@ public class MainFrame extends JFrame implements PanelConfig{
         panel.setBackground(Color.RED);
     }
     
+    //How to draw the panel
     class MyPanel extends JPanel{
         boolean ifn = false;
         
